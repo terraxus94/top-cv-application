@@ -7,6 +7,10 @@ class SelectCountryInput extends Component {
         id={this.props.id}
         name={this.props.name}
         className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+        // value={this.props.state.form.generalInfo.country}
+        onChange={(e) => {
+          this.props.handleChange('generalInfo', this.props.id, e);
+        }}
       >
         <option defaultValue="Select your country">Select your country</option>
         <option value="Afghanistan">Afghanistan</option>

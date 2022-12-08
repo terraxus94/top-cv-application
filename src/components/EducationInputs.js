@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Label from './Label';
-import TextInput from './TextInput';
 
 class EducationInputs extends Component {
   deleteHandler = (id) => {
@@ -13,7 +12,17 @@ class EducationInputs extends Component {
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-2 ">
               <Label for={'school'} labelText={'School:'} />
-              <TextInput id={'school'} name={'school'} />
+
+              <input
+                type="text"
+                id="school"
+                name="school"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                // value={this.props.state.formData.education}
+                onChange={(e) => {
+                  this.props.handleChange('education', 'school', e);
+                }}
+              />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-6">
@@ -21,27 +30,47 @@ class EducationInputs extends Component {
               <Label for={'eduStartDate'} labelText={'From'} />
               <input
                 type="date"
-                id="eduStartDate"
-                name="eduStartDate"
-                placeholder="From"
+                id="startDate"
+                name="startDate"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                value={this.props.updateValue(
+                  'education',
+                  'startDate',
+                  this.props.id
+                )}
+                onChange={(e) => {
+                  this.props.handleChange('education', 'startDate', e);
+                }}
               />
             </div>
             <div className="col-span-1 ">
               <Label for={'eduEndDate'} labelText={'To'} />
               <input
                 type="date"
-                id="eduEndDate"
-                name="eduEndDate"
-                placeholder="From"
+                id="endDate"
+                name="endDate"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                // value={this.props.state.formData.education}
+                onChange={(e) => {
+                  this.props.handleChange('education', 'endDate', e);
+                }}
               />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-2 ">
               <Label for={'title'} labelText={'Title:'} />
-              <TextInput id={'title'} name={'title'} />
+
+              <input
+                type="text"
+                id="title"
+                name="title"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                // value={this.props.state.formData.education}
+                onChange={(e) => {
+                  this.props.handleChange('education', 'title', e);
+                }}
+              />
             </div>
           </div>
         </div>
