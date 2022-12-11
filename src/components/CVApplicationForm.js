@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../styles/CVApplicationForm.css';
-import EducationForm from './EducationForm.js';
 import GeneralInformationForm from './GeneralInformationForm.js';
 import EducationInputs from './EducationInputs.js';
 import GeneralInformationPreview from './GeneralInformationPreview.js';
@@ -24,7 +23,7 @@ class CVApplicationForm extends Component {
         },
         education: [
           {
-            id: 99,
+            id: 0,
             school: '',
             startDate: '',
             endDate: '',
@@ -32,7 +31,6 @@ class CVApplicationForm extends Component {
           },
         ],
       },
-      formElements: [],
     };
   }
 
@@ -76,28 +74,18 @@ class CVApplicationForm extends Component {
       });
     }
   };
-  // has this been completed?
-  handleEduValue = (formType, key, id) => {
-    this.state.formData.education.map((e) => {
-      console.log(e.id);
-      console.log(id);
-      if (e.id === id) return e[key];
-    });
-    // const value = this.state.formData.education.filter((element) => {
-    //   if (element.id) {
-    //     return;
-    //   }
-    // });
+
+  getEduValue = (key, id) => {
+    // return this.state.formData.education[0].school;
+    return this.state.formData.education.find(
+      (section) => Number(section.id) === Number(id)
+    )[key];
+    // console.log('first');
+    // console.log(sranje[key]);
   };
 
   deleteEducationSection = (id) => {
-    const newSections = this.state.formElements.filter((section) => {
-      if (section.id !== Number(id)) {
-        return section;
-      }
-    });
-
-    const newEduValues = this.state.formData.education.filter((element) => {
+    const newEduElements = this.state.formData.education.filter((element) => {
       return element.id !== Number(id);
     });
 
@@ -105,9 +93,8 @@ class CVApplicationForm extends Component {
       ...this.state,
       formData: {
         ...this.state.formData,
-        education: newEduValues,
+        education: newEduElements,
       },
-      formElements: newSections,
     });
   };
 
@@ -119,7 +106,7 @@ class CVApplicationForm extends Component {
         education: [
           ...this.state.formData.education,
           {
-            id: this.state.formElements.length,
+            id: this.state.formData.education.length,
             school: '',
             startDate: '',
             endDate: '',
@@ -127,23 +114,6 @@ class CVApplicationForm extends Component {
           },
         ],
       },
-      formElements: [
-        ...this.state.formElements,
-        {
-          element: (
-            <EducationInputs
-              key={this.state.formElements.length}
-              deletable="true"
-              id={this.state.formElements.length}
-              onDeleteSection={this.deleteEducationSection}
-              handleChange={this.handleChange}
-              state={this.props.state}
-              updateValue={this.handleEduValue}
-            />
-          ),
-          id: this.state.formElements.length,
-        },
-      ],
     });
   };
 
@@ -157,49 +127,82 @@ class CVApplicationForm extends Component {
 
   render() {
     return (
-      <div className="bg-gray-100">
-        <h1 className="text-3xl font-bold underline">CV generator</h1>
-        <form>
-          {' '}
-          //I dont need the form in preview mode, move the form and parent
-          elements inside cond rend
-          {this.state.mode === 'isEditing' && (
-            <div>
-              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                <GeneralInformationForm
-                  handleChange={this.handleChange}
-                  state={this.state}
+      <div className="bg-gray-100 ">
+        <div className=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold underline">CV generator</h1>
+          <form>
+            {' '}
+            {/* I dont need the form in preview mode, move the form and parent elements inside cond rend */}
+            {this.state.mode === 'isEditing' && (
+              <div>
+                <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                  <GeneralInformationForm
+                    handleChange={this.handleChange}
+                    state={this.state}
+                  />
+                </div>
+                <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                  <div className="flex flex-col gap-2">
+                    <h2>Education</h2>
+                    {this.state.formData.education.map((section, i) => {
+                      if (i === 0) {
+                        return (
+                          <EducationInputs
+                            key={section.id}
+                            deletable={false}
+                            id={section.id}
+                            onDeleteSection={this.deleteEducationSection}
+                            handleChange={this.handleChange}
+                            state={this.state}
+                            getEduValue={this.getEduValue}
+                          />
+                        );
+                      }
+                      return (
+                        <EducationInputs
+                          key={section.id}
+                          deletable={true}
+                          id={section.id}
+                          onDeleteSection={this.deleteEducationSection}
+                          handleChange={this.handleChange}
+                          state={this.state}
+                          getEduValue={this.getEduValue}
+                        />
+                      );
+                    })}
+                    <button
+                      type="button"
+                      className="p-5  bg-indigo-600 hover:bg-indigo-700 hover:ring-indigo-500 hover:ring-offset-indigo-200 text-white  transition ease-in duration-200  text-xl font-extrabold shadow-md hover:outline-none hover:ring-2 hover:ring-offset-2  rounded-full w-4 h-4 flex items-center justify-center "
+                      onClick={(e) => {
+                        this.updateEducationElements();
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <input
+                  type="button"
+                  value="Preview mode"
+                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={this.changeMode}
                 />
               </div>
-              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                <EducationForm
-                  handleChange={this.handleChange}
-                  state={this.state}
-                  updateEducationElements={this.updateEducationElements}
-                  updateValue={this.handleEduValue}
+            )}
+            {this.state.mode === 'isPreview' && (
+              <div>
+                <GeneralInformationPreview state={this.state} />
+                <EducationPreview state={this.state} />
+                <input
+                  type="button"
+                  value="Edit mode"
+                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={this.changeMode}
                 />
               </div>
-              <input
-                type="button"
-                value="Preview mode"
-                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                onClick={this.changeMode}
-              />
-            </div>
-          )}
-          {this.state.mode === 'isPreview' && (
-            <div>
-              <GeneralInformationPreview state={this.state} />
-              <EducationPreview state={this.state} />
-              <input
-                type="button"
-                value="Edit mode"
-                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                onClick={this.changeMode}
-              />
-            </div>
-          )}
-        </form>
+            )}
+          </form>
+        </div>
       </div>
     );
   }
@@ -222,40 +225,3 @@ export default CVApplicationForm;
 // conditional rendering unutar postojece komponente? nove komponente samo za conditional? passati kao prop? cijeli kod ili sekciju po sekciju s istim criteria?
 // I hate spreading edit: bolje updateat state sa .map ili ono spread sranje...
 // id=99 facepalm.jpg
-
-let testState = {
-  mode: 'isEditing',
-  formData: {
-    generalInfo: {
-      firstName: 'Antonio',
-      lastName: 'Marusic',
-      telPrefix: '385',
-      telNumber: '0993858333',
-      country: 'Croatia',
-      city: 'Pula',
-      additionalInfo: 'Stanislav',
-    },
-    education: [
-      {
-        id: 99,
-        school: 'MZ',
-        startDate: '2022-12-01',
-        endDate: '2022-12-01',
-        title: 'Osnovnoskolac',
-      },
-      {
-        id: 1,
-        school: 'PMG',
-        startDate: '2022-12-02',
-        endDate: '2022-12-02',
-        title: 'Srednjoskolac',
-      },
-    ],
-  },
-  formElements: [
-    {
-      element: '<EducationInputs />',
-      id: 0,
-    },
-  ],
-};

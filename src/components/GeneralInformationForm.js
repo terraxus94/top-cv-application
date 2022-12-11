@@ -17,6 +17,7 @@ class GeneralInformationForm extends Component {
               name="firstname"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={this.props.state.formData.generalInfo.firstName}
+              placeholder={this.props.state.formData.generalInfo.firstName}
               onChange={(e) => {
                 this.props.handleChange('generalInfo', 'firstName', e);
               }}
@@ -30,6 +31,7 @@ class GeneralInformationForm extends Component {
               name="lastName"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={this.props.state.formData.generalInfo.lastName}
+              placeholder={this.props.state.formData.generalInfo.lastName}
               onChange={(e) => {
                 this.props.handleChange('generalInfo', 'lastName', e);
               }}
@@ -44,7 +46,10 @@ class GeneralInformationForm extends Component {
                 type="number"
                 id="telPrefix"
                 name="telPrefix"
-                placeholder="Country prefix"
+                placeholder={
+                  this.props.state.formData.generalInfo.telPrefix ||
+                  'Country prefix'
+                }
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 value={this.props.state.formData.generalInfo.telPrefix}
                 onChange={(e) => {
@@ -57,7 +62,10 @@ class GeneralInformationForm extends Component {
                 type="number"
                 id="telNumber"
                 name="telNumber"
-                placeholder="Telephone number"
+                placeholder={
+                  this.props.state.formData.generalInfo.telNumber ||
+                  'Telephone number'
+                }
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 value={this.props.state.formData.generalInfo.telNumber}
                 onChange={(e) => {
@@ -83,7 +91,10 @@ class GeneralInformationForm extends Component {
                 type="text"
                 id="city"
                 name="city"
-                placeholder="City of residence"
+                placeholder={
+                  this.props.state.formData.generalInfo.city ||
+                  'City of residence'
+                }
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 value={this.props.state.formData.generalInfo.city}
                 onChange={(e) => {
@@ -96,7 +107,12 @@ class GeneralInformationForm extends Component {
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-2 ">
             <Label for={'photo'} labelText={'Photo:'} />
-            <TextInput id={'photo'} name={'photo'} />
+            <TextInput
+              id={'photo'}
+              name={'photo'}
+              placeholder={'this is illegal'}
+              disabled={'disabled'}
+            />
           </div>
         </div>
         <div className="grid grid-cols-6 gap-6">
@@ -109,6 +125,7 @@ class GeneralInformationForm extends Component {
               name="additionalInfo"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={this.props.state.formData.generalInfo.additionalInfo}
+              placeholder={this.props.state.formData.generalInfo.additionalInfo}
               onChange={(e) => {
                 this.props.handleChange('generalInfo', 'additionalInfo', e);
               }}
