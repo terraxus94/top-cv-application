@@ -13,3 +13,7 @@
     -moz-appearance: textfield;
   }
 } */
+
+.preview-container:hover .local-edit {
+  display: inline-flex!important;
+}
