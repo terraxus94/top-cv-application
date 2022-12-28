@@ -7,14 +7,14 @@ class EducationPreview extends Component {
       <div className="flex flex-col gap-2">
         <h2>Education</h2>
         {previewData.map((element) => {
-          const startDate = new Date(element.startDate)
+          const startDate = new Date(element.eduStartDate)
             .toDateString()
             .split(' ')
             .slice(1)
             .join()
             .replace(',', ' ');
 
-          const endDate = new Date(element.endDate)
+          const endDate = new Date(element.eduEndDate)
             .toDateString()
             .split(' ')
             .slice(1)

@@ -10,7 +10,7 @@ class CVApplicationForm extends Component {
     super();
 
     this.state = {
-      mode: 'isEditing',
+      editingMode: true,
       formData: {
         generalInfo: {
           firstName: '',
@@ -25,8 +25,8 @@ class CVApplicationForm extends Component {
           {
             id: 0,
             school: '',
-            startDate: '',
-            endDate: '',
+            eduStartDate: '',
+            eduEndDate: '',
             title: '',
           },
         ],
@@ -34,7 +34,7 @@ class CVApplicationForm extends Component {
     };
   }
 
-  handleChange = (formType, key, e) => {
+  handleChange = (formType, key, value, groupID) => {
     if (formType === 'generalInfo') {
       this.setState({
         ...this.state,
@@ -42,20 +42,16 @@ class CVApplicationForm extends Component {
           ...this.state.formData,
           generalInfo: {
             ...this.state.formData.generalInfo,
-            [key]: e.target.value,
+            [key]: value,
           },
         },
       });
     }
 
     if (formType === 'education') {
-      const groupID = Number(
-        e.target.parentElement.parentElement.parentElement.parentElement.id
-      );
-
       const updatedElements = this.state.formData.education.map((element) => {
-        if (element.id === groupID) {
-          return { ...element, [key]: e.target.value };
+        if (element.id === Number(groupID)) {
+          return { ...element, [key]: value };
         }
         return element;
       });
@@ -100,8 +96,8 @@ class CVApplicationForm extends Component {
           {
             id: this.state.formData.education.length,
             school: '',
-            startDate: '',
-            endDate: '',
+            eduStartDate: '',
+            eduEndDate: '',
             title: '',
           },
         ],
@@ -110,10 +106,10 @@ class CVApplicationForm extends Component {
   };
 
   changeMode = () => {
-    const newMode = this.state.mode === 'isEditing' ? 'isPreview' : 'isEditing';
+    const newMode = this.state.editingMode === true ? false : true;
 
     this.setState({
-      mode: newMode,
+      editingMode: newMode,
     });
   };
 
@@ -122,7 +118,7 @@ class CVApplicationForm extends Component {
       <div className="bg-gray-100 ">
         <div className=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold underline">CV generator</h1>
-          {this.state.mode === 'isEditing' && (
+          {this.state.editingMode === true && (
             <form>
               <div>
                 <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
@@ -180,7 +176,7 @@ class CVApplicationForm extends Component {
               </div>
             </form>
           )}
-          {this.state.mode === 'isPreview' && (
+          {this.state.editingMode === false && (
             <div>
               <GeneralInformationPreview state={this.state} />
               <EducationPreview state={this.state} />
@@ -207,3 +203,6 @@ export default CVApplicationForm;
 // conditional rendering unutar postojece komponente? nove komponente samo za conditional? passati kao prop? cijeli kod ili sekciju po sekciju s istim criteria?
 // state spread thing
 // local edit state
+
+// to do
+// u change handlerima šalješ cijeli e, a koristiš samo e.target.value, mogo si odmah.. al tu je onda razlika šta na tvoj način samo jednom napišeš taj dio koda, a onako bi morao svaki put kad zoveš funkciju

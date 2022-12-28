@@ -6,80 +6,98 @@ class EducationInputs extends Component {
     this.props.onDeleteSection(id);
   };
 
-  // getEduValue = (key, id) => {
-  //   const updatedElement = this.props.state;
-  //   //   .formData.education.find(
-  //   //   (e) => Number(e.id) === Number(id)
-  //   // );
-
-  //   console.log(updatedElement);
-  //   // return sranje[key];
-  // };
-
   render() {
     return (
       <div className="flex flex-row justify-start" id={this.props.id}>
         <div className="flex flex-col">
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-2 ">
-              <Label for={'school'} labelText={'School:'} />
-
+              <Label for={'school' + this.props.id} labelText={'School:'} />
               <input
                 type="text"
-                id="school"
-                name="school"
+                id={'school' + this.props.id}
+                name={'school' + this.props.id}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 value={this.props.getEduValue('school', this.props.id)}
                 placeholder={this.props.getEduValue('school', this.props.id)}
                 onChange={(e) => {
-                  this.props.handleChange('education', 'school', e);
+                  this.props.handleChange(
+                    'education',
+                    'school',
+                    e.target.value,
+                    e.target.parentElement.parentElement.parentElement
+                      .parentElement.id
+                  );
                 }}
               />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-1 ">
-              <Label for={'eduStartDate'} labelText={'From'} />
+              <Label for={'eduStartDate' + this.props.id} labelText={'From'} />
               <input
                 type="date"
-                id="startDate"
-                name="startDate"
+                id={'eduStartDate' + this.props.id}
+                name={'eduStartDate' + this.props.id}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                value={this.props.getEduValue('startDate', this.props.id)}
-                placeholder={this.props.getEduValue('startDate', this.props.id)}
+                value={this.props.getEduValue('eduStartDate', this.props.id)}
+                placeholder={this.props.getEduValue(
+                  'eduStartDate',
+                  this.props.id
+                )}
                 onChange={(e) => {
-                  this.props.handleChange('education', 'startDate', e);
+                  this.props.handleChange(
+                    'education',
+                    'eduStartDate',
+                    e.target.value,
+                    e.target.parentElement.parentElement.parentElement
+                      .parentElement.id
+                  );
                 }}
               />
             </div>
             <div className="col-span-1 ">
-              <Label for={'eduEndDate'} labelText={'To'} />
+              <Label for={'eduEndDate' + this.props.id} labelText={'To'} />
               <input
                 type="date"
-                id="endDate"
-                name="endDate"
+                id={'eduEndDate' + this.props.id}
+                name={'eduEndDate' + this.props.id}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                value={this.props.getEduValue('endDate', this.props.id)}
-                placeholder={this.props.getEduValue('endDate', this.props.id)}
+                value={this.props.getEduValue('eduEndDate', this.props.id)}
+                placeholder={this.props.getEduValue(
+                  'eduEndDate',
+                  this.props.id
+                )}
                 onChange={(e) => {
-                  this.props.handleChange('education', 'endDate', e);
+                  this.props.handleChange(
+                    'education',
+                    'eduEndDate',
+                    e.target.value,
+                    e.target.parentElement.parentElement.parentElement
+                      .parentElement.id
+                  );
                 }}
               />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-2 ">
-              <Label for={'title'} labelText={'Title:'} />
-
+              <Label for={'title' + this.props.id} labelText={'Title:'} />
               <input
                 type="text"
-                id="title"
-                name="title"
+                id={'title' + this.props.id}
+                name={'title' + this.props.id}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 value={this.props.getEduValue('title', this.props.id)}
                 placeholder={this.props.getEduValue('title', this.props.id)}
                 onChange={(e) => {
-                  this.props.handleChange('education', 'title', e);
+                  this.props.handleChange(
+                    'education',
+                    'title',
+                    e.target.value,
+                    e.target.parentElement.parentElement.parentElement
+                      .parentElement.id
+                  );
                 }}
               />
             </div>
