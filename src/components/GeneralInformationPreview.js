@@ -31,10 +31,3 @@ class GeneralInformationPreview extends Component {
 }
 
 export default GeneralInformationPreview;
-
-// preview mode
-// on element hover show edit/preview button
-// onclick on button change the preview element to input
-// if the input is updated the state should update
-// when returning to preview mode for that input the value should be updated
-// if the global edit mode is clicked all preview changes to edit

@@ -18,6 +18,7 @@ class GeneralInformationForm extends Component {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={this.props.state.formData.generalInfo.firstName}
               placeholder={this.props.state.formData.generalInfo.firstName}
+              required
               onChange={(e) => {
                 this.props.handleChange('generalInfo', 'firstName', e);
               }}

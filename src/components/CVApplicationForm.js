@@ -10,7 +10,7 @@ class CVApplicationForm extends Component {
     super();
 
     this.state = {
-      mode: 'isEditing', // isEditing || isPreview
+      mode: 'isEditing',
       formData: {
         generalInfo: {
           firstName: '',
@@ -34,10 +34,6 @@ class CVApplicationForm extends Component {
     };
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   handleChange = (formType, key, e) => {
     if (formType === 'generalInfo') {
       this.setState({
@@ -56,7 +52,6 @@ class CVApplicationForm extends Component {
       const groupID = Number(
         e.target.parentElement.parentElement.parentElement.parentElement.id
       );
-      // const inputID = e.target.id; // ovo je isto kao key koji saljem TBD sto je bolje
 
       const updatedElements = this.state.formData.education.map((element) => {
         if (element.id === groupID) {
@@ -76,12 +71,9 @@ class CVApplicationForm extends Component {
   };
 
   getEduValue = (key, id) => {
-    // return this.state.formData.education[0].school;
     return this.state.formData.education.find(
       (section) => Number(section.id) === Number(id)
     )[key];
-    // console.log('first');
-    // console.log(sranje[key]);
   };
 
   deleteEducationSection = (id) => {
@@ -130,10 +122,8 @@ class CVApplicationForm extends Component {
       <div className="bg-gray-100 ">
         <div className=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold underline">CV generator</h1>
-          <form>
-            {' '}
-            {/* I dont need the form in preview mode, move the form and parent elements inside cond rend */}
-            {this.state.mode === 'isEditing' && (
+          {this.state.mode === 'isEditing' && (
+            <form>
               <div>
                 <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                   <GeneralInformationForm
@@ -188,20 +178,20 @@ class CVApplicationForm extends Component {
                   onClick={this.changeMode}
                 />
               </div>
-            )}
-            {this.state.mode === 'isPreview' && (
-              <div>
-                <GeneralInformationPreview state={this.state} />
-                <EducationPreview state={this.state} />
-                <input
-                  type="button"
-                  value="Edit mode"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={this.changeMode}
-                />
-              </div>
-            )}
-          </form>
+            </form>
+          )}
+          {this.state.mode === 'isPreview' && (
+            <div>
+              <GeneralInformationPreview state={this.state} />
+              <EducationPreview state={this.state} />
+              <input
+                type="button"
+                value="Edit mode"
+                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={this.changeMode}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -210,18 +200,10 @@ class CVApplicationForm extends Component {
 
 export default CVApplicationForm;
 
-// to do
-// save form inputs to state - cheggity chek
-// differentiate between preview and edit mode on the same layout
-// the preview/edit mode should be global, changing all fields to the specified mode
-// in preview mode on hover over the fields show an edit button which on click turns the preview field into input
-// required input
-
 // known mistakes
-// mmm yeeees everything needs to be a component
-// apsolutni kaos sa propsima probably due to above, what should be a child component method instead of the parent?\
+// not sure what should be a component and what not, how deep do we go
 // kad nesto ide u constructor a kad u render dio npr
 // https://reactjs.org/docs/conditional-rendering.html#:~:text=It%20will%20render%20either%20%3CLoginButton%20/%3E%20or%20%3CLogoutButton%20/%3E%20depending%20on%20its%20current%20state.%20It%20will%20also%20render%20a%20%3CGreeting%20/%3E%20from%20the%20previous%20example%3A
 // conditional rendering unutar postojece komponente? nove komponente samo za conditional? passati kao prop? cijeli kod ili sekciju po sekciju s istim criteria?
-// I hate spreading edit: bolje updateat state sa .map ili ono spread sranje...
-// id=99 facepalm.jpg
+// state spread thing
+// local edit state
