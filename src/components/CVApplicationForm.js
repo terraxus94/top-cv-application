@@ -1,40 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/CVApplicationForm.css';
 import GeneralInformationForm from './GeneralInformationForm.js';
 import EducationInputs from './EducationInputs.js';
 import GeneralInformationPreview from './GeneralInformationPreview.js';
 import EducationPreview from './EducationPreview.js';
 
-class CVApplicationForm extends Component {
-  constructor() {
-    super();
+function CVApplicationForm(props) {
+  const [editingMode, setEditingMode] = useState(true);
+  const [generalInfo, setGeneralInfo] = useState();
+  const [educationInfo, setEducationInfo] = useState([
+    {
+      id: 0,
+      school: '',
+      eduStartDate: '',
+      eduEndDate: '',
+      title: '',
+    },
+  ]);
 
-    this.state = {
-      editingMode: true,
-      formData: {
-        generalInfo: {
-          firstName: '',
-          lastName: '',
-          telPrefix: '',
-          telNumber: '',
-          country: '',
-          city: '',
-          additionalInfo: '',
-        },
-        education: [
-          {
-            id: 0,
-            school: '',
-            eduStartDate: '',
-            eduEndDate: '',
-            title: '',
-          },
-        ],
-      },
-    };
-  }
+  // this.state = {
+  //   editingMode: true,
+  //   formData: {
+  //     generalInfo: {
+  //       firstName: '',
+  //       lastName: '',
+  //       telPrefix: '',
+  //       telNumber: '',
+  //       country: '',
+  //       city: '',
+  //       additionalInfo: '',
+  //     },
+  //     education: [
+  //       {
+  //         id: 0,
+  //         school: '',
+  //         eduStartDate: '',
+  //         eduEndDate: '',
+  //         title: '',
+  //       },
+  //     ],
+  //   },
+  // };
 
-  handleChange = (formType, key, value, groupID) => {
+  const handleChange = (formType, key, value, groupID) => {
     if (formType === 'generalInfo') {
       this.setState({
         ...this.state,
@@ -66,13 +74,13 @@ class CVApplicationForm extends Component {
     }
   };
 
-  getEduValue = (key, id) => {
+  const getEduValue = (key, id) => {
     return this.state.formData.education.find(
       (section) => Number(section.id) === Number(id)
     )[key];
   };
 
-  deleteEducationSection = (id) => {
+  const deleteEducationSection = (id) => {
     const newEduElements = this.state.formData.education.filter((element) => {
       return element.id !== Number(id);
     });
@@ -86,7 +94,7 @@ class CVApplicationForm extends Component {
     });
   };
 
-  updateEducationElements = (e) => {
+  const updateEducationElements = (e) => {
     this.setState({
       ...this.state,
       formData: {
@@ -105,7 +113,7 @@ class CVApplicationForm extends Component {
     });
   };
 
-  changeMode = () => {
+  const changeMode = () => {
     const newMode = this.state.editingMode === true ? false : true;
 
     this.setState({
@@ -113,41 +121,28 @@ class CVApplicationForm extends Component {
     });
   };
 
-  render() {
-    return (
-      <div className="bg-gray-100 ">
-        <div className=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold underline">CV generator</h1>
-          {this.state.editingMode === true && (
-            <form>
-              <div>
-                <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                  <GeneralInformationForm
-                    handleChange={this.handleChange}
-                    state={this.state}
-                  />
-                </div>
-                <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                  <div className="flex flex-col gap-2">
-                    <h2>Education</h2>
-                    {this.state.formData.education.map((section, i) => {
-                      if (i === 0) {
-                        return (
-                          <EducationInputs
-                            key={section.id}
-                            deletable={false}
-                            id={section.id}
-                            onDeleteSection={this.deleteEducationSection}
-                            handleChange={this.handleChange}
-                            state={this.state}
-                            getEduValue={this.getEduValue}
-                          />
-                        );
-                      }
+  return (
+    <div className="bg-gray-100 ">
+      <div className=" mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold underline">CV generator</h1>
+        {this.state.editingMode === true && (
+          <form>
+            <div>
+              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <GeneralInformationForm
+                  handleChange={this.handleChange}
+                  state={this.state}
+                />
+              </div>
+              <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <div className="flex flex-col gap-2">
+                  <h2>Education</h2>
+                  {this.state.formData.education.map((section, i) => {
+                    if (i === 0) {
                       return (
                         <EducationInputs
                           key={section.id}
-                          deletable={true}
+                          deletable={false}
                           id={section.id}
                           onDeleteSection={this.deleteEducationSection}
                           handleChange={this.handleChange}
@@ -155,43 +150,54 @@ class CVApplicationForm extends Component {
                           getEduValue={this.getEduValue}
                         />
                       );
-                    })}
-                    <button
-                      type="button"
-                      className="p-5  bg-indigo-600 hover:bg-indigo-700 hover:ring-indigo-500 hover:ring-offset-indigo-200 text-white  transition ease-in duration-200  text-xl font-extrabold shadow-md hover:outline-none hover:ring-2 hover:ring-offset-2  rounded-full w-4 h-4 flex items-center justify-center "
-                      onClick={(e) => {
-                        this.updateEducationElements();
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
+                    }
+                    return (
+                      <EducationInputs
+                        key={section.id}
+                        deletable={true}
+                        id={section.id}
+                        onDeleteSection={this.deleteEducationSection}
+                        handleChange={this.handleChange}
+                        state={this.state}
+                        getEduValue={this.getEduValue}
+                      />
+                    );
+                  })}
+                  <button
+                    type="button"
+                    className="p-5  bg-indigo-600 hover:bg-indigo-700 hover:ring-indigo-500 hover:ring-offset-indigo-200 text-white  transition ease-in duration-200  text-xl font-extrabold shadow-md hover:outline-none hover:ring-2 hover:ring-offset-2  rounded-full w-4 h-4 flex items-center justify-center "
+                    onClick={(e) => {
+                      this.updateEducationElements();
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
-                <input
-                  type="button"
-                  value="Preview mode"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={this.changeMode}
-                />
               </div>
-            </form>
-          )}
-          {this.state.editingMode === false && (
-            <div>
-              <GeneralInformationPreview state={this.state} />
-              <EducationPreview state={this.state} />
               <input
                 type="button"
-                value="Edit mode"
+                value="Preview mode"
                 className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 onClick={this.changeMode}
               />
             </div>
-          )}
-        </div>
+          </form>
+        )}
+        {this.state.editingMode === false && (
+          <div>
+            <GeneralInformationPreview state={this.state} />
+            <EducationPreview state={this.state} />
+            <input
+              type="button"
+              value="Edit mode"
+              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={this.changeMode}
+            />
+          </div>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default CVApplicationForm;
