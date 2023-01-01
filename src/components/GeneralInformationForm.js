@@ -15,8 +15,8 @@ function GeneralInformationForm(props) {
             id="firstName"
             name="firstName"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            value={props.state.formData.generalInfo.firstName}
-            placeholder={props.state.formData.generalInfo.firstName}
+            value={props.state.firstName}
+            placeholder={props.state.firstName}
             required
             onChange={(e) => {
               props.handleChange('generalInfo', 'firstName', e.target.value);
@@ -30,8 +30,8 @@ function GeneralInformationForm(props) {
             id="lastName"
             name="lastName"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            value={props.state.formData.generalInfo.lastName}
-            placeholder={props.state.formData.generalInfo.lastName}
+            value={props.state.lastName}
+            placeholder={props.state.lastName}
             onChange={(e) => {
               props.handleChange('generalInfo', 'lastName', e.target.value);
             }}
@@ -46,11 +46,9 @@ function GeneralInformationForm(props) {
               type="text"
               id="telPrefix"
               name="telPrefix"
-              placeholder={
-                props.state.formData.generalInfo.telPrefix || 'Country prefix'
-              }
+              placeholder={props.state.telPrefix || 'Country prefix'}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              value={props.state.formData.generalInfo.telPrefix}
+              value={props.state.telPrefix}
               onChange={(e) => {
                 props.handleChange('generalInfo', 'telPrefix', e.target.value);
               }}
@@ -61,11 +59,9 @@ function GeneralInformationForm(props) {
               type="text"
               id="telNumber"
               name="telNumber"
-              placeholder={
-                props.state.formData.generalInfo.telNumber || 'Telephone number'
-              }
+              placeholder={props.state.telNumber || 'Telephone number'}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              value={props.state.formData.generalInfo.telNumber}
+              value={props.state.telNumber}
               onChange={(e) => {
                 props.handleChange('generalInfo', 'telNumber', e.target.value);
               }}
@@ -89,11 +85,9 @@ function GeneralInformationForm(props) {
               type="text"
               id="city"
               name="city"
-              placeholder={
-                props.state.formData.generalInfo.city || 'City of residence'
-              }
+              placeholder={props.state.city || 'City of residence'}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              value={props.state.formData.generalInfo.city}
+              value={props.city}
               onChange={(e) => {
                 props.handleChange('generalInfo', 'city', e.target.value);
               }}
@@ -120,8 +114,8 @@ function GeneralInformationForm(props) {
             id="additionalInfo"
             name="additionalInfo"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            value={props.state.formData.generalInfo.additionalInfo}
-            placeholder={props.state.formData.generalInfo.additionalInfo}
+            value={props.state.additionalInfo}
+            placeholder={props.state.additionalInfo}
             onChange={(e) => {
               props.handleChange(
                 'generalInfo',

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function GeneralInformationPreview(props) {
-  const previewData = props.state.formData.generalInfo;
+  const previewData = props.state;
 
   return (
     <div className="flex flex-col gap-2">

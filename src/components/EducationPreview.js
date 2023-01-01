@@ -1,7 +1,7 @@
 import React from 'react';
 
 function EducationPreview(props) {
-  const previewData = props.state.formData.education;
+  const previewData = props.state;
   return (
     <div className="flex flex-col gap-2">
       <h2>Education</h2>
